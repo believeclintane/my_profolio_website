@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 const MouseFollower = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHidden, setIsHidden] = useState(false); // New state to track hover
+  const [position, setPosition] = useState({ x: -100, y: -100 }); // Start off-screen
+  const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+    const updatePosition = (x, y, target) => {
+      setPosition({ x, y });
 
-      // Check if the element under the cursor is a button or link
-      const target = e.target;
       const isOverInteractive =
         target.closest("button") ||
         target.closest("a") ||
@@ -18,13 +16,30 @@ const MouseFollower = () => {
       setIsHidden(!!isOverInteractive);
     };
 
+    const handleMouseMove = (e) => {
+      updatePosition(e.clientX, e.clientY, e.target);
+    };
+
+    const handleTouchMove = (e) => {
+      // Use the first touch point
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        updatePosition(touch.clientX, touch.clientY, touch.target);
+      }
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("touchmove", handleTouchMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
   }, []);
 
   return (
     <div
-      className={`fixed top-0 left-0 pointer-events-none z-[9999] rounded-full hidden md:block transition-opacity duration-300 ${
+      className={`fixed top-0 left-0 pointer-events-none z-[9999] rounded-full transition-opacity duration-300 ${
         isHidden ? "opacity-0 scale-50" : "opacity-100 scale-100"
       }`}
       style={{
@@ -38,8 +53,7 @@ const MouseFollower = () => {
         `,
         backdropFilter: "brightness(1.5) saturate(1.5)",
         WebkitBackdropFilter: "brightness(1.5) saturate(1.5)",
-        transform: `translate(${position.x - 10}px, ${position.y - 10}px)`,
-        // We keep the transform transition for smoothness
+        transform: `translate3d(${position.x - 10}px, ${position.y - 10}px, 0)`,
         transition:
           "transform 0.1s ease-out, opacity 0.3s ease, scale 0.3s ease",
       }}
