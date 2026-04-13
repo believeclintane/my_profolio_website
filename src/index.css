@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@theme {
+  /* Colors */
+  --color-primary: #00e676;
+  --color-background-light: #f5f8f7;
+  --color-background-dark: #0f2319;
+  --color-surface: #0c0e11;
+  --color-on-surface: #f9f9fd;
+  --color-on-surface-variant: #aaabaf;
+  --color-surface-container-low: #111417;
+  --color-surface-container: #171a1d;
+
+  /* Font Families */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-headline: "Space Grotesk", sans-serif;
+
+  /* Border Radius */
+  --radius-default: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+}
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #0c0e11;
+  color: #f9f9fd;
+  scroll-behavior: smooth;
+}
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+.vault-gradient {
+  background: linear-gradient(135deg, #3fff8b 0%, #13ea79 100%);
+}
+.glass-panel {
+  background: rgba(41, 44, 49, 0.7);
+  backdrop-filter: blur(20px);
+}
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+.hero1 {
+  background-image: radial-gradient(
+    circle at 2px 2px,
+    #00e676 1px,
+    transparent 0
+  );
+  background-size: 40px 40px;
+}
+.customtext {
+  -webkit-text-stroke: 1.5px #00e676;
+}
+
+.styleStack {
+  font-variation-settings: "FILL" 1;
+}
+/* In your global CSS */
+body:has(button:hover, a:hover) .mouse-follower-class {
+  opacity: 0;
+}
+:root {
+  scroll-behavior: smooth;
+}
