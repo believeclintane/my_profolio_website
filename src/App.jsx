@@ -9,8 +9,10 @@ import { Education } from "./pages/Education";
 import { Contact } from "./pages/Contact";
 import MouseFollower from "./assets/layout/mouse";
 import { Footer } from "./assets/layout/Footer";
+import { LoadingScreen } from "./assets/layout/Preloader";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   // const [count, setCount] = useState(0);
   window.scrollTo({
     top: 0,
@@ -18,20 +20,26 @@ function App() {
     behavior: "smooth", // This "forces" the smoothness
   });
   return (
-    <div className="bg-background text-on-surface">
-      <Navbar />
-      <MouseFollower />
-      <main className="pt-20">
-        <Hero />
-        <About />
-        <Stack />
-        <Impact />
-        <Journey />
-        <Education />
-        <Contact />
-        <Footer />
-      </main>
-    </div>
+    <>
+      {isLoading ? (
+        <LoadingScreen onFinished={() => setIsLoading(false)} />
+      ) : (
+        <div className="bg-background text-on-surface">
+          <Navbar />
+          <MouseFollower />
+          <main className="pt-20">
+            <Hero />
+            <About />
+            <Stack />
+            <Impact />
+            <Journey />
+            <Education />
+            <Contact />
+            <Footer />
+          </main>
+        </div>
+      )}
+    </>
   );
 }
 

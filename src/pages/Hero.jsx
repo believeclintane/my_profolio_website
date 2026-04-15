@@ -28,12 +28,14 @@ export const Hero = () => {
             </span>
           </h1>
           <p className="font-body text-lg md:text-xl text-on-surface-variant max-w-xl mb-12 leading-relaxed border-l-2 border-primary/30 pl-6">
-            Building{" "}
+            Architecting{" "}
             <span className="text-white font-semibold">
-              scalable, cloud-based architectures{" "}
+              scalable cloud ecosystems{" "}
             </span>
-            and high-performance APIs. 4+ years of turning complex backend logic
-            into seamless user experiences.
+            and high-concurrency APIs. 4+ years of engineering the intersection
+            between robust <span className="text-primary/80">Laravel</span>{" "}
+            backends and reactive <span className="text-primary/80">React</span>{" "}
+            interfaces.
           </p>
           <div className="flex flex-wrap items-center gap-6">
             <Button
@@ -42,7 +44,7 @@ export const Hero = () => {
               href="https://github.com/believeclintane"
               className="flex items-center gap-3"
             >
-              View My Work
+              Personal Work
               <span className="material-symbols-outlined">arrow_right_alt</span>
             </Button>
             <Button

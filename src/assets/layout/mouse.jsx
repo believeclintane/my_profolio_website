@@ -1,27 +1,37 @@
 import React, { useState, useEffect } from "react";
 
 const MouseFollower = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 }); // Start off-screen
-  const [isHidden, setIsHidden] = useState(false);
+  const [position, setPosition] = useState({ x: -100, y: -100 });
+  const [isHidden, setIsHidden] = useState(true); // Default to true (hidden until moved)
 
   useEffect(() => {
     const updatePosition = (x, y, target) => {
       setPosition({ x, y });
 
       const isOverInteractive =
-        target.closest("button") ||
-        target.closest("a") ||
-        window.getComputedStyle(target).cursor === "pointer";
+        target &&
+        (target.closest("button") ||
+          target.closest("a") ||
+          window.getComputedStyle(target).cursor === "pointer");
 
       setIsHidden(!!isOverInteractive);
     };
 
     const handleMouseMove = (e) => {
+      // If it was hidden because it left the screen, show it again
+      setIsHidden(false);
       updatePosition(e.clientX, e.clientY, e.target);
     };
 
+    const handleMouseLeave = () => {
+      setIsHidden(true); // Hide when cursor leaves the browser window
+    };
+
+    const handleMouseEnter = () => {
+      setIsHidden(false); // Show when cursor enters the browser window
+    };
+
     const handleTouchMove = (e) => {
-      // Use the first touch point
       if (e.touches.length > 0) {
         const touch = e.touches[0];
         updatePosition(touch.clientX, touch.clientY, touch.target);
@@ -29,18 +39,22 @@ const MouseFollower = () => {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseenter", handleMouseEnter);
     window.addEventListener("touchmove", handleTouchMove);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseenter", handleMouseEnter);
       window.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
 
   return (
     <div
-      className={`fixed top-0 left-0 pointer-events-none z-[9999] rounded-full transition-opacity duration-300 ${
-        isHidden ? "opacity-0 scale-50" : "opacity-100 scale-100"
+      className={` hidden md:block fixed top-0 left-0 pointer-events-none z-[9999] rounded-full transition-all duration-300 ${
+        isHidden ? "opacity-0 scale-0" : "opacity-100 scale-100"
       }`}
       style={{
         width: "20px",
