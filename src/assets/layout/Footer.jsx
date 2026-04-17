@@ -14,7 +14,7 @@ export const Footer = () => {
         <div className="flex gap-8 font-['Inter'] text-lg tracking-widest uppercase">
           <a
             className="text-slate-500 hover:text-[#367c51] transition-colors opacity-80 hover:opacity-100"
-            href="www.linkedin.com/in/clinton-okharu"
+            href="https://linkedin.com/in/clinton-okharu"
           >
             <CiLinkedin />
           </a>
